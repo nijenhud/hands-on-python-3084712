@@ -25,12 +25,16 @@ def laureate_list():
     search_string = request.args.get("flName").lower().strip()
 
     # tip: remember that laureate["name"] contains a first name
-    for laureate in laureates:
-        surname = laureate["surname"].lower()
-        # your code here
-        if search_string in surname:
-            results.append(laureate)
+    # for laureate in laureates:
+    #     surname = laureate["surname"].lower()
 
+    #     # your code here
+    #     if search_string in surname:
+    #         results.append(laureate)
+
+    results = list(
+        filter(lambda l:
+            search_string in l["surname"].lower() or search_string in l["name"].lower(), laureates))
     return jsonify(results)
 
 

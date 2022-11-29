@@ -1,5 +1,6 @@
 import csv
 from flask import Flask, render_template, request, jsonify
+from pprint import pprint
 
 
 app = Flask(__name__)
@@ -19,11 +20,13 @@ def index():
 def laureate_list():
     # template found in templates/laureate.html
     results = []
-    if not request.args.get("surname"):
-        return jsonify(results)
 
     # Your code here!
-    return "your code here!"
+    search_string = request.args.get("surname").lower().strip()
+    results = list(
+        filter(lambda l: (search_string in l["surname"].lower()), laureates))
+    # results.append(tmp_list)
+    return jsonify(results)
 
 
 app.run(debug=True)
